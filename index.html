@@ -1,1 +1,1971 @@
-teste teste teste
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>GUIA ESCOVADOR DE BITS</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
+        <link href="https://bootswatch.com/3/cyborg/bootstrap.css" rel="stylesheet">
+        <!-- link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/themes/prism.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/prism.min.js"></script-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+        <!-- and it's easy to individually load additional languages -->
+        <style>
+            :root {
+                --g-top: 0px;
+                --g-reunioes-with: 100px;
+                --g-reunioes-conteudo-with: calc( 100% / 3 - var(--g-reunioes-with) );
+                --g-pessoas-with: 100px;
+                --g-pessoas-conteudo-with: calc( 100% / 3 - var(--g-pessoas-with) );
+                --g-documentacoes-with: 100px;
+                --g-documentacoes-conteudo-with: calc( 100% / 3 - var(--g-documentacoes-with) );
+                --g-container-botoes-background-color: rgb(60, 59, 57);
+                --g-botoes-background-color: rgb(177, 243, 240);
+                --g-botoes-selected-background-color: lightseagreen;
+                --g-textarea-color: rgb(210, 204, 197);
+                --g-textarea-background-color: rgb(40, 39, 38);
+                --g-foreground-color: rgb(0, 0, 0);
+                --g-background-color-off: rgb(240, 240, 255);
+                --g-background-color: rgb(255, 255, 255);
+                --g-text-color: rgba(52, 101, 164, 1);
+                --dg-text-color: rgba(52, 49, 72, 1);
+            }
+            body {
+                margin: 0px;
+                padding: 0px;
+                border: 0px;
+                font-family: "Roboto Condensed", serif;
+                font-optical-sizing: auto;
+                font-style: normal;
+                font-size: medium;
+                outline: none;
+                color: var(--g-foreground-color);
+                background-color: var(--g-background-color);
+            }
+
+            p {
+                margin: 0;
+                padding: 0;
+                line-height: 1.2;
+            }
+
+            p a {
+                padding-left: 10px;
+                line-height: 1.5;
+            }
+
+            pre {
+                border: 0px solid lightgray;
+                margin: 0px;
+                padding: 0px;
+                background: transparent;
+                font-family: "Roboto Mono", serif;
+                font-size: 80%;
+                line-height: 1.2;
+            }
+
+            pre code {
+                border: 1px solid lightgray;
+                border-radius: 0.5em;
+                font-family: "Roboto Mono", serif;
+                margin-left: 0em;
+                margin-right: 0em;
+            }
+
+            h1,h2,h3,h4,h5,h6 {
+                display: block;
+                color: var(--g-text-color);
+                /* padding-left: 10px; */
+                margin-left: 10px;
+                margin-right: 10px;
+                border-bottom: 1px solid rgba(175, 207, 248, 0.5);
+            }
+
+            h2,h3,h4,h5,h6 {
+                margin-top: 2em;
+            }
+
+            h1 {
+                font-size: 200%;
+            }
+
+            h2 {
+                font-size: 150%;
+            }
+
+            h3 {
+                font-size: 120%;
+            }
+
+            h4 {
+                font-size: 120%;
+            }
+
+            h5 {
+                font-size: 120%;
+            }
+
+            pre {
+                padding-left: 30px;
+                padding-right: 10px;
+            }
+
+            p {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            keywords {
+                padding-left: 10px;
+                padding-right: 10px;
+                font-style: normal;
+                font-weight: lighter;
+                font-size: 70%;
+                opacity: 0.7;
+            }
+
+            keywords:before {
+                content: '[ ';
+            }
+
+            keywords:after {
+                content: ' ]';
+            }
+
+            .center {
+                text-align: center;
+            }
+
+            refs {
+                position: relative;
+                padding-left: 30px;
+                /* padding-right: 10px; */
+                margin-bottom: 0px;
+                padding-bottom: 0px;
+                font-size: 80%;
+                opacity: 0.7;
+            }
+            
+            refs ul {
+                margin-left: 20px;
+                margin-bottom: 0px;
+                padding-bottom: 0px;
+            }
+
+
+            gCodeInline {
+                float: left;
+                white-space: pre;
+                padding: 0.5em;
+                margin-left: 0em;
+                margin-right: 0.5em;
+                border: 1px solid lightgray;
+                border-radius: 0.5em;
+                font-family: "Roboto Mono", serif;
+                font-size: 80%;
+                line-height: 1.2;
+            }
+
+            gCode {
+                display: block;
+                white-space: pre-wrap;
+                word-break: keep-all;
+                padding: 0.5em;
+                margin-left: 0em;
+                margin-right: 0em;
+                border: 1px solid lightgray;
+                border-radius: 0.5em;
+                font-family: "Roboto Mono", serif;
+                font-size: 80%;
+                line-height: 1.2;
+            }
+
+            prex {
+                background-color: transparent;
+                border: 0px;
+            }
+
+            .top {
+                position: absolute;
+                width: 100%;
+                height: var(--g-top);
+                background-color: lightblue;
+            }
+            .reunioes {
+                position: absolute;
+                left: 0px;
+                width: var(--g-reunioes-with);
+                top: var(--g-top);
+                bottom: 0px;
+                padding: 0px;
+                margin: 0px;
+                background-color: var(--g-container-botoes-background-color);
+            }
+            .reunioes .bloco {
+                position: relative;
+                height: 4ex;
+                background-color: var(--g-botoes-background-color);
+                margin-top: 10px;
+                cursor: pointer;
+                padding: 1ex;
+                text-align: center;
+                user-select: none;
+                color: black;
+            }
+            .reunioes .bloco:hover {
+                background-color: beige;
+            }
+            .reunioes-conteudo {
+                position: absolute;
+                left: var(--g-reunioes-with);
+                width: var(--g-reunioes-conteudo-with);
+                top: var(--g-top);
+                bottom: 0px;
+                background-color: var(--g-textarea-background-color);
+            }
+            .reunioes-conteudo .textarea {
+                position: absolute;
+                top: 0px;
+                bottom: 0px;
+                left: 0px;
+                right: 0px;
+                border: 0px;
+                margin: 0px;
+                padding: 1ex;
+                outline: none;
+                font-family: "Roboto Mono", serif;
+                /* font-size: 90%; */
+                /*font-family: "Roboto Condensed", serif;*/
+                font-optical-sizing: auto;
+                font-style: normal;
+                color: var(--g-textarea-color);
+                background-color: var(--g-textarea-background-color);
+            }
+            .pessoas {
+                position: absolute;
+                left: calc(var(--g-reunioes-with) + var(--g-reunioes-conteudo-with));
+                width: var(--g-pessoas-with);
+                top: var(--g-top);
+                bottom: 0px;
+                padding: 0px;
+                margin: 0px;
+                background-color: var(--g-container-botoes-background-color);
+            }
+            .pessoas .bloco {
+                position: relative;
+                height: 4ex;
+                background-color: var(--g-botoes-background-color);
+                margin-top: 10px;
+                cursor: pointer;
+                padding: 1ex;
+                text-align: center;
+                user-select: none;
+                color: black;
+            }
+            .pessoas .bloco:hover {
+                background-color: beige;
+            }
+            .pessoas-conteudo {
+                position: absolute;
+                left: calc(var(--g-reunioes-with) + var(--g-reunioes-conteudo-with) + var(--g-pessoas-with));
+                width: var(--g-pessoas-conteudo-with);
+                top: var(--g-top);
+                bottom: 0px;
+                background-color: var(--g-textarea-background-color);
+            }
+            .pessoas-conteudo textarea {
+                position: absolute;
+                top: 0px;
+                bottom: 0px;
+                left: 0px;
+                right: 0px;
+                border: 0px;
+                margin: 0px;
+                padding: 1ex;
+                outline: none;
+                font-family: "Roboto Mono", serif;
+                /* font-size: 90%; */
+                /*font-family: "Roboto Condensed", serif;*/
+                font-optical-sizing: auto;
+                font-style: normal;
+                color: var(--g-textarea-color);
+                background-color: var(--g-textarea-background-color);
+            }
+            .documentacoes {
+                position: absolute;
+                left: calc(var(--g-reunioes-with) + var(--g-reunioes-conteudo-with) + var(--g-pessoas-with) + var(--g-pessoas-conteudo-with));
+                width: var(--g-documentacoes-with);
+                top: var(--g-top);
+                bottom: 0px;
+                padding: 0px;
+                margin: 0px;
+                background-color: var(--g-container-botoes-background-color);
+            }
+            .documentacoes .bloco {
+                position: relative;
+                height: 4ex;
+                background-color: var(--g-botoes-background-color);
+                margin-top: 10px;
+                cursor: pointer;
+                padding: 1ex;
+                text-align: center;
+                user-select: none;
+                color: black;
+            }
+            .documentacoes .bloco:hover {
+                background-color: beige;
+            }
+            .documentacoes-conteudo {
+                position: absolute;
+                left: calc(var(--g-reunioes-with) + var(--g-reunioes-conteudo-with) + var(--g-pessoas-with) + var(--g-pessoas-conteudo-with) + var(--g-documentacoes-with));
+                min-width: var(--g-documentacoes-conteudo-with);
+                right: 0px;
+                top: var(--g-top);
+                bottom: 0px;
+                background-color: var(--g-textarea-background-color);
+            }
+            .documentacoes-conteudo textarea {
+                position: absolute;
+                top: 0px;
+                bottom: 0px;
+                left: 0px;
+                right: 0px;
+                border: 0px;
+                margin: 0px;
+                padding: 1ex;
+                outline: none;
+                font-family: "Roboto Mono", serif;
+                /* font-size: 90%; */
+                /*font-family: "Roboto Condensed", serif;*/
+                font-optical-sizing: auto;
+                font-style: normal;
+                color: var(--g-textarea-color);
+                background-color: var(--g-textarea-background-color);
+            }
+            .blocoSelecionado {
+                background-color: var(--g-botoes-selected-background-color) !important;
+            }
+            .panel {
+                font-family: "Roboto Mono", serif;
+                margin-bottom: 20px;
+                border: 0px !important;
+                border-radius: 0px !important;
+                box-shadow: 0 0 0 !important;
+                background-color: var(--g-textarea-background-color);
+            }
+            .note-statusbar.locked {
+                display: none;
+            }
+        </style>
+        <script>
+            $(document).ready(function(){
+                // setTimeout(function(){ 
+                    document.querySelectorAll("#loader")[0].style.display='none';
+                    const code = document.querySelectorAll("pre code");
+                    [...code].forEach(el => el.textContent = el.textContent.replace(/^\n/,''));
+                    hljs.highlightAll(); 
+                // }, 2000);
+            });
+        </script>
+    </head>
+    <body>
+        <div id="loader" style="z-index:999; background-color: rgb(255, 255, 255); display:block; position:fixed; top:0px; bottom: 0px; left: 0px; right: 0px;">
+            <!-- <div style="position:fixed; top:50%; left:0px; right:0px; text-align: center; font-size: 150%;">
+                Guia do escovador de bits
+                <br>
+                Carregando.. 
+                <br>
+                <br> 
+                <i>Se demorar mais do que alguns segundos, verifique o console do navegador</i>
+            </div> -->
+        </div>
+        <div style="
+                z-index: 99;
+                position:fixed; 
+                top:0px; 
+                left:0px; 
+                right:0px; 
+                height:2em; 
+                padding:0.25em; 
+                text-align:left; 
+                background-color: white; 
+                color: rgba(52, 101, 164, 1);
+                font-size: 200%;">
+            Guia do escovador de bits
+            <input type="text" style="margin-left: 2em; font-size: 50%;" placeholder="pesquisa">
+        </div>
+        <div style="height:4em;"></div>
+        <h2>Materiais de referência</h2>
+        <p>
+                <a href="datasheets/cpu-6502.pdf" target="_blank">CPU 6502</a>
+            <br><a href="datasheets/cpu-8008.pdf" target="_blank">CPU 8008</a>
+            <br><a href="datasheets/cpu-z80.pdf" target="_blank">CPU Z80</a>
+            <br><a href="datasheets/eeprom-27c512.pdf" target="_blank">EEPROM 27c512</a>
+            <br><a href="datasheets/mcu-atmega328p.pdf" target="_blank">MCU Atmega328P</a>
+            <br><a href="datasheets/mcu-esp32.pdf" target="_blank">MCU ESP32</a>
+            <br><a href="datasheets/mcu-esp32-wroom.pdf" target="_blank">MCU ESP32 Wroom</a>
+            <br><a href="datasheets/mcu-atmega328p-instruction-set.pdf" target="_blank">MCU Atmega328P Instruction Set</a>
+            <br><a href="datasheets/mcu-atmega328p-asm.pdf" target="_blank">MCU Atmega328P ASM</a>
+            <br><a href="datasheets/mcu-atmega328p-asm-guide.pdf" target="_blank">MCU Atmega328P ASM Guide</a>
+            <br><a href="datasheets/mcu-rp2040.pdf" target="_blank">MCU RP2040</a>
+            <br><a href="datasheets/ci-pcf8574.pdf" target="_blank">PCF8574 8 Port Expander I2C</a>
+        </p>
+        <h2>Snippets úteis</h2>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Winget padrão <keywords>Windows; Winget; Terminal; Console; Bash;</keywords></h3>
+<pre><code class="bash">
+
+# Instalação de pacotes
+winget install 7zip.7zip Adobe.Acrobat.Reader.64-bit AdrienAllard.FileConverter AgileBits.1Password Altap.Salamander AltSnap.AltSnap Amazon.Kindle AnyDesk.AnyDesk voidtools.Everything GIMP.GIMP.3 vim.vim Audacity.Audacity Beeper.Beeper calibre.calibre Canonical.Ubuntu.2204 9P1J8S7CCWWT Datronicsoft.SpacedeskDriver.Server dbeaver.dbeaver Docker.DockerDesktop FastStone.Viewer GeorgieLabs.SoundWireServer GitHub.GitHubDesktop Google.Chrome Google.GoogleDrive HandBrake.HandBrake HeidiSQL.HeidiSQL 9NK8T1KSHFFR Inkscape.Inkscape Insomnia.Insomnia IrfanSkiljan.IrfanView JGraph.Draw Kairos.DuetDisplay MarekJasinski.FreeCommanderXE Microsoft.Azure.StorageExplorer Microsoft.Git Microsoft.PowerToys Microsoft.VCRedist.2013.x64 Microsoft.VisualStudioCode Microsoft.WindowsTerminal Microsoft.WSL Mozilla.Firefox Mozilla.Thunderbird.pt-BR Notepad++.Notepad++ OBSProject.OBSStudio OlegShparber.Zeal Oracle.JavaRuntimeEnvironment Oracle.VirtualBox P-StSoftware.WinSSHTerm PeterPawlowski.foobar2000 PuTTY.PuTTY Python.Launcher Python.Python.3.5 Python.Python.3.6 Python.Python.3.7 Python.Python.3.8 Python.Python.3.9 Python.Python.3.10 Python.Python.3.11 Python.Python.3.12 Python.Python.3.13 RustDesk.RustDesk Samsung.DeX Skillbrains.Lightshot SumatraPDF.SumatraPDF Tailscale.Tailscale TeamViewer.TeamViewer TheDocumentFoundation.LibreOffice UnifiedIntents.UnifiedRemote VideoLAN.VLC Voicemeeter WinSCP.WinSCP PassmarkSoftware.OSFMount
+
+# Atualiação dos pacotes instalados
+winget update --all --include-unknown
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Instalar Tailscale no Ubuntu <keywords>Linux; Ubuntu; VPN; Tailscale; Terminal; Console; Bash;</keywords></h3>
+<pre><code class="bash">
+# Instalar o TAILSCALE
+curl -fsSL https://tailscale.com/install.sh | sh
+
+# SE DER ERRO no certificado, executar as linhas abaixo e instalar com o passo 1
+cp -a /etc/ca-certificates.conf /etc/ca-certificates.conf-$(date +"%m-%d-%Y-%H:%M:%S") && sed -i 's|^mozilla\/DST_Root_CA_X3\.crt|!mozilla/DST_Root_CA_X3.crt|' /etc/ca-certificates.conf && curl -sk https://letsencrypt.org/certs/isrgrootx1.pem -o /usr/local/share/ca-certificates/ISRG_Root_X1.crt && update-ca-certificates --fresh && curl -fsSL https://tailscale.com/install.sh | sh
+
+# Gerar uma chave no admin do Tailscale
+
+# Conectar na rede com o comando abaixo
+tailscale up --hostname=NOME_DO_HOST --authkey tskey-auth-xxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Instalar Azcopy Ubuntu <keywords>Linux; Ubuntu; Azure; Copy; Azcopy; Terminal; Console; Bash;</keywords></h3>
+<pre><code class="bash">
+curl -L https://aka.ms/downloadazcopy-v10-linux | sudo tar --strip-components=1 -C /usr/local/bin --no-same-owner --exclude="*.txt" -xzvf - | sudo chmod 755 /usr/local/bin/azcopy
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Instalar Teamviwer no Ubuntu <keywords>Linux; Ubuntu; Teamviewer; Terminal; Console; Bash;</keywords></h3>
+<pre><code class="bash">
+wget http://download.teamviewer.com/download/linux/teamviewer-host_amd64.deb
+apt install ./teamviewer-host_amd64.deb
+teamviewer passwd sua_senha
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Instalar OpenSSH Server no Windows <keywords>Windows; Powershell; OpenSSH; SSH; Firewall; Terminal; Console; Remote;</keywords></h3>
+<pre><code class="powershell">
+#Instalar o OpenSSH
+Get-WindowsCapability -Online | Where-Object Name -like 'OpenSSH*'
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+Start-Service sshd
+Set-Service -Name sshd -StartupType 'Automatic'
+
+#Abrir porta no firewall:
+netsh advfirewall firewall add rule name="Open Port 22" dir=in action=allow protocol=TCP localport=22
+
+#Script Powershell para adicionar a regra se ela não existir
+if (!(Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -ErrorAction SilentlyContinue | Select-Object Name, Enabled)) {
+    Write-Output "Firewall Rule 'OpenSSH-Server-In-TCP' does not exist, creating it..."
+    New-NetFirewallRule -Name 'OpenSSH-Server-In-TCP' -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22
+} else {
+    Write-Output "Firewall rule 'OpenSSH-Server-In-TCP' has been created and exists."
+}
+</code></pre>
+<refs>
+    Referências:
+    <ul>
+        <li>https://learn.microsoft.com/pt-br/windows-server/administration/openssh/openssh_install_firstuse</li>
+        <li>https://winscp.net/eng/docs/guide_windows_openssh_server</li>
+    </ul>
+</refs>
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Instalar OpenSSH Server no Windows (Winget) <keywords>Windows; Powershell; OpenSSH; SSH; Winget; Firewall; Terminal; Console; Remote;</keywords></h3>
+<pre><code class="powershell">
+winget install Microsoft.OpenSSH.Preview
+netsh advfirewall firewall add rule name="Port 22" dir=in action=allow protocol=TCP localport=22
+net user myusername "mypassword" /add /passwordchg:no /y     
+net localgroup "Administradores" "myusername" /add
+
+# Para trocar a senha
+net user myusername "mypassword" /passwordchg:no /y          
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Executar comandos remotos no windows usando cUrl <keywords>Windows; Powershell; cUrl; Terminal; Console; Remote;</keywords></h3>
+<pre><code class="powershell">
+iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+Set-ExecutionPolicy Bypass -Scope Process -Force;
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
+iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Criar usuário no windows por linha de comando <keywords>Windows; Powershell; Usuário; User; Terminal; Console;</keywords></h3>
+<pre><code class="powershell">
+# Ler a senha do usuário
+$Password = Read-Host -AsSecureString
+
+# Ou por linha de comando
+$Password="Teste123" | ConvertTo-SecureString -AsPlainText -Force
+
+$User = "NEWUSER"
+New-LocalUser $User -Password $Password -FullName "USER_FULL_NAME" -Description "DESCRIPTION" -AccountNeverExpires -PasswordNeverExpires
+Add-LocalGroupMember -Group "Administrators" -Member $User
+Set-LocalUser -Name $User -PasswordNeverExpires:$true
+
+# Remover usuário
+Remove-LocalUser -Name "USER_ACCOUNT_NAME"
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Junction link Windows (mapear diretório) <keywords>Windows; Powershell; Link; Junction; Diretório; Terminal; Console;</keywords></h3>
+<pre><code class="powershell">
+New-Item -ItemType Junction -Path "$env:Path\To\Map" -Target "C:\Path\Target"
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>OCI Oracle Cloud Firewall Settings <keywords>Linux; Oracle; Cloud; OCI; Firewall; Terminal; Console; Remote;</keywords></h3>
+<pre><code class="bash">
+# No admin das VMS
+#    Networking >> Virtual cloud networks >> vcn-xxx-xxx >> Security List Details
+
+# Editar o arquivo de conf
+vim /etc/iptables/rules.v4
+
+# Adicionar a regra
+-A INPUT -p tcp --dport 12345 -j ACCEPT
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Iptables: Limite de conexões por segundo no iptables <keywords>Linux; Firewall; Iptables; Limit; Connections; Terminal; Console;</keywords></h3>
+<pre><code class="bash">
+iptables -A INPUT -p tcp --dport 443 -m state --state NEW -m recent --set
+iptables -A INPUT -p tcp --dport 443 -m state --state NEW -m recent --update --seconds 10 --hitcount 10 -j REJECT
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Port knocker iptables <keywords>Linux; Firewall; Iptables; Port; Knocker; Connection; Terminal; Console;</keywords></h3>
+<pre><code class="bash">
+iptables -N STATE0
+iptables -A STATE0 -p udp --dport 100 -m recent --name KNOCK1 --set -j DROP
+iptables -A STATE0 -j DROP
+
+iptables -N STATE1
+iptables -A STATE1 -m recent --name KNOCK1 --remove
+iptables -A STATE1 -p udp --dport 200 -m recent --name KNOCK2 --set -j DROP
+iptables -A STATE1 -j STATE0
+
+iptables -N STATE2
+iptables -A STATE2 -m recent --name KNOCK2 --remove
+iptables -A STATE2 -p udp --dport 300 -m recent --name KNOCK3 --set -j DROP
+iptables -A STATE2 -j STATE0
+
+iptables -N STATE3
+iptables -A STATE3 -m recent --name KNOCK3 --remove
+iptables -A STATE3 -p tcp --dport 22 -j ACCEPT
+iptables -A STATE3 -j STATE0
+
+iptables -A INPUT -m recent --name KNOCK3 --rcheck -j STATE3
+iptables -A INPUT -m recent --name KNOCK2 --rcheck -j STATE2
+iptables -A INPUT -m recent --name KNOCK1 --rcheck -j STATE1
+iptables -A INPUT -j STATE0
+
+# Teste
+HOST=seu_host
+echo -n "*" | nc -q1 -u $HOST 100
+echo -n "*" | nc -q1 -u $HOST 200
+echo -n "*" | nc -q1 -u $HOST 300
+ssh user@$HOST
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Configurar o vim global <keywords>Linux; Windows; Vim; Config; Terminal; Console;</keywords></h3>
+<pre><code class="text">
+cd ~
+vim .vimrc
+
+set tabstop=4           " tabs are displayed as 4 spaces
+set expandtab
+set shiftwidth=4        " by default, when auto-identing, add 4 spaces (or 1 tabstop)
+set foldmethod=marker   " fold on markers
+set scrolloff=1         " always show one line around the cursor
+set showmatch           " show matching bracket
+set noerrorbells        " no error bells
+set autowrite           " write the file when switching between files or something
+set nowrap              " do not wrap long lines                                                                                                       
+set nobackup            " do not keep a backup file, use versions instead
+set history=50          " keep 50 lines of command line history
+set ruler               " show the cursor position all the time
+set showcmd             " display incomplete commands
+set incsearch           " do incremental searching
+set formatoptions=tcq   " wrap with textwidth, wrap comments, insert commend leader (twice), format comments
+set smartindent         " smart identation
+set wim=longest,list    " file auto-completion
+set vb t_vb=            " convert bells to visual bells and do nothing as visual bell
+set t_Co=256            " 256 color terminals
+let mapleader=","     " use comma to start user-defined (in plugins) functions
+set cursorline
+hi CursorLine cterm=NONE ctermbg=254 ctermfg=NONE
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Gravar um ODT como PDF em linha de comando <keywords>Linux; Windows; LibreOffice; ODT; PDF; Convert; Terminal; Console;</keywords></h3>
+<pre><code class="bash">
+# PDF
+libreoffice --headless --convert-to pdf file.odt
+
+# PDF/A
+unoconv -f pdf -eSelectPdfVersion=1 file.odt
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Informações sobre o PDF</h3>
+<pre><code class="bash">
+qpdf --show-npages file.pdf
+
+pdfinfo file.pdf
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>MySQL dump views descriptions <keywords>Linux; Windows; MySQL; Dump; Backup; Terminal; Console;</keywords></h3>
+<pre><code class="bash">
+mysql --skip-column-names --batch -e 'select CONCAT("DROP TABLE IF EXISTS ", TABLE_SCHEMA, ".", TABLE_NAME, "; CREATE OR REPLACE VIEW ", TABLE_SCHEMA, ".", TABLE_NAME, " AS ", VIEW_DEFINITION, "; ") table_name from information_schema.views'
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>SSH REVERSO <keywords>Linux; Windows; Firewall; OpenSSH; SSH; Tunel; Connections; Terminal; Console; Remote;</keywords></h3>
+<pre><code class="bash">
+# remote
+ssh -N -R 7000:localhost:22 user@other.host
+
+# local
+telnet localhost 7000
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Find ordenado por data</h3>
+<pre><code class="bash">
+find . -type f -printf "%-.22T+ %16s $PWD/%P\n" | sort |  tail    </code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>C# Ler um resource embarcado e executar ele <keywords>Linux; Windows; Code; C#; Resource; Read;</keywords></h3>
+<pre><code class="c#">
+var fileName = "file.pdf";
+if (File.Exists(fileName)) File.Delete(fileName);
+
+Assembly assembly = Assembly.GetExecutingAssembly();
+
+using (var input = assembly.GetManifestResourceStream(fileName))
+using (var output = File.Open(fileName, FileMode.CreateNew)) {
+    if (input == null) throw new FileNotFoundException(fileName + ": Embedded resoure file not found");
+
+    var buffer = new byte[32768];
+    int read;
+    while ((read = input.Read(buffer, 0, buffer.Length)) > 0) {
+        output.Write(buffer, 0, read);
+    }
+    output.Flush();
+    System.Diagnostics.Process.Start(fileName);
+}
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>OpenSSL Certificados PEM, PFX e XML <keywords>Linux; Windows; OpenSSH; SSH; Certificado; PEM; PFX; XML; Xmlsec1; Terminal; Console;</keywords></h3>
+<pre><code class="bash">
+# OpenSSL pfx to pem
+
+openssl pkcs12 -in cert.pfx -out cert.pem –nodes
+
+# OpenSSL p7s pkcs7
+
+openssl smime -sign -nodetach -in qrx.py -out qrx.py.p7 -outform pem -inkey ghc-ecpf-2018.key -signer ghc-ecpf-2018.pem
+openssl smime -verify -in qrx.py.p7 -inform pem -CAfile cert/cadeias/bundle.pemx
+openssl pkcs7 -print_certs -in qrx.py.p7
+
+
+# XML Sign dsig cert
+CERT=/data/wsClients/sindiregis.pem
+
+xmlsec1 --sign --privkey-pem $CERT,$CERT --output $1.signed.xml $1
+
+
+# XML Verify dsig cert
+cd /data/cadeias
+
+which xmllint >> /dev/null
+if [ $? -ne 0 ]; then
+    echo "\nxmllint not found\n\nsudo apt-get install libxml2-utils \n\n"
+    exit
+fi
+
+which xmlsec1 >> /dev/null
+if [ $? -ne 0 ]; then
+    echo "\nxmlsec1 not found \n\nsudo apt-get install xmlsec1 \n\n"
+    exit
+fi
+
+if [ -z "$1" ]; then
+    echo "Usage $0 <signed_xml_file>"
+    exit
+fi
+
+xmlsec1 --verify --print-xml-debug $(for i in *.pem; do echo -n " --trusted-pem $i"; done) $1 2>/dev/null | xmllint --format -
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Programa python filter filtrar endereços de emails de um txt <keywords>Linux; Windows; Code; Python; Filter; RE; Email; TXT;</keywords></h3>
+<pre><code class="python">
+import re
+regex = re.compile(("([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`"
+                    "{|}~-]+)*(@|\sat\s)(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(\.|"
+                    "\sdot\s))+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)"))
+
+s = """
+txt contendo os enderecos de emails no corpo
+txt contendo os enderecos de emails no corpo
+txt contendo os enderecos de emails no corpo
+txt contendo os enderecos de emails no corpo
+"""
+
+emls = []
+for i in (email[0] for email in re.findall(regex, s) if not email[0].startswith('//')):
+    if "@" in i:
+        eml = i.split("@")[1]
+        if not eml in emls:
+            emls.append(eml)
+for i in sorted(emls):
+    if not "myusername" in i:
+        print "*"+i+" REJECT"
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Python: programa exemplo banco de dados MySQL <keywords>Linux; Windows; Code; Python; Database; MySQL;</keywords></h3>
+<pre><code class="python">
+"""
+-- Requisitos --
+
+-- Instalar o módulo:
+py -m pip install mysql-connector
+
+-- Criar a tabela no banco MySQL
+
+CREATE TABLE clientes (
+     id INT AUTO_INCREMENT PRIMARY KEY
+    ,nome VARCHAR(255) NOT NULL
+    ,cpf VARCHAR(14) UNIQUE NOT NULL
+    ,email VARCHAR(255) NOT NULL
+    ,telefone VARCHAR(20) NOT NUL
+);
+"""
+
+
+import mysql.connector
+
+class Cliente:
+    def __init__(self, nome, cpf, email, telefone):
+        self.nome = nome
+        self.cpf = cpf
+        self.email = email
+        self.telefone = telefone
+
+    def CriarCliente(self, host, usuario, senha, banco):
+        try:
+            mydb = mysql.connector.connect(
+                 host=host
+                ,user=usuario
+                ,password=senha
+                ,database=banco
+            )
+            mycursor = mydb.cursor()
+            sql = "INSERT INTO clientes (nome, cpf, email, telefone) VALUES (%s, %s, %s, %s)"
+            val = (self.nome, self.cpf, self.email, self.telefone)
+            mycursor.execute(sql, val)
+            mydb.commit()
+            print(mycursor.rowcount, "registro inserido.")
+            mydb.close()
+            return True
+        except mysql.connector.Error as err:
+            print(f"Erro ao criar cliente: {err}")
+            return False
+
+    @staticmethod
+    def LerCliente(host, usuario, senha, banco, cpf):
+        try:
+            mydb = mysql.connector.connect(
+                 host=host
+                ,user=usuario
+                ,password=senha
+                ,database=banco
+            )
+            mycursor = mydb.cursor()
+            sql = "SELECT nome, email, telefone FROM clientes WHERE cpf = %s"
+            val = (cpf,)
+            mycursor.execute(sql, val)
+            resultado = mycursor.fetchone()
+            mydb.close()
+            if resultado:
+                print(f"Nome: {resultado[0]}, Email: {resultado[1]}, Telefone: {resultado[2]}")
+                return resultado
+            else:
+                print("Cliente não encontrado.")
+                return None
+        except mysql.connector.Error as err:
+            print(f"Erro ao ler cliente: {err}")
+            return None
+
+    def AtualizarCliente(self, host, usuario, senha, banco):
+        try:
+            mydb = mysql.connector.connect(
+                 host=host
+                ,user=usuario
+                ,password=senha
+                ,database=banco
+            )
+            mycursor = mydb.cursor()
+            sql = "UPDATE clientes SET nome = %s, email = %s, telefone = %s WHERE cpf = %s"
+            val = (self.nome, self.email, self.telefone, self.cpf)
+            mycursor.execute(sql, val)
+            mydb.commit()
+            print(mycursor.rowcount, "registro(s) atualizado(s).")
+            mydb.close()
+            return True
+        except mysql.connector.Error as err:
+            print(f"Erro ao atualizar cliente: {err}")
+            return False
+
+    @staticmethod
+    def DeletarCliente(host, usuario, senha, banco, cpf):
+        try:
+            mydb = mysql.connector.connect(
+                 host=host
+                ,user=usuario
+                ,password=senha
+                ,database=banco
+            )
+            mycursor = mydb.cursor()
+            sql = "DELETE FROM clientes WHERE cpf = %s"
+            val = (cpf,)
+            mycursor.execute(sql, val)
+            mydb.commit()
+            print(mycursor.rowcount, "registro(s) deletado(s).")
+            mydb.close()
+            return True
+        except mysql.connector.Error as err:
+            print(f"Erro ao deletar cliente: {err}")
+            return False
+
+# Exemplo de uso:
+if __name__ == "__main__":
+    # Configurações do banco de dados
+    dbHost     = "localhost"    # Substitua pelo endereço do MySQL
+    dbUser     = "seu_usuario"  # Substitua pelo seu usuário do MySQL
+    dbPassword = "sua_senha"    # Substitua pela sua senha do MySQL
+    dbName     = "seu_banco"    # Substitua pelo nome do seu banco de dados
+
+    # Criando um novo cliente
+    novoCliente = Cliente("João Silva", "123.456.789-00", "joao.silva@email.com", "(11) 99999-9999")
+    novoCliente.CriarCliente(dbHost, dbUser, dbPassword, dbName)
+
+    # Lendo um cliente existente
+    Cliente.LerCliente(dbHost, dbUser, dbPassword, dbName, "123.456.789-00")
+
+    # Atualizando o cliente
+    novoCliente.nome = "João da Silva"
+    novoCliente.AtualizarCliente(dbHost, dbUser, dbPassword, dbName)
+    Cliente.LerCliente(dbHost, dbUser, dbPassword, dbName, "123.456.789-00")
+
+    # Deletando o cliente
+    Cliente.DeletarCliente(dbHost, dbUser, dbPassword, dbName, "123.456.789-00")
+    Cliente.LerCliente(dbHost, dbUser, dbPassword, dbName, "123.456.789-00")
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>C#: Programa exemplo banco de dados MySQL <keywords>Linux; Windows; Code; C#; DotNet; Database; MySQL;</keywords></h3>
+<pre><code class="c#">
+// -- Requisitos --
+// 
+// -- Instalar o módulo:
+// dotnet add package mysql.data
+// 
+// -- Criar a tabela no banco MySQL
+// CREATE TABLE clientes (
+//      id INT AUTO_INCREMENT PRIMARY KEY
+//     ,nome VARCHAR(255) NOT NULL
+//     ,cpf VARCHAR(14) UNIQUE NOT NULL
+//     ,email VARCHAR(255) NOT NULL
+//     ,telefone VARCHAR(20) NOT NUL
+// );
+
+using System;
+using MySql.Data.MySqlClient;
+
+public class Cliente {
+    public string Nome     { get; set; }
+    public string Cpf      { get; set; }
+    public string Email    { get; set; }
+    public string Telefone { get; set; }
+
+    public Cliente(string nome, string cpf, string email, string telefone) {
+        Nome = nome;
+        Cpf = cpf;
+        Email = email;
+        Telefone = telefone;
+    }
+
+    public bool CriarCliente(string host, string usuario, string senha, string banco) {
+        string connectionString = $"Server={host};Database={banco};Uid={usuario};Pwd={senha};";
+
+        try {
+            using (MySqlConnection connection = new MySqlConnection(connectionString)) {
+                connection.Open();
+                string sql =
+                    "INSERT INTO clientes (nome, cpf, email, telefone) VALUES (@Nome, @Cpf, @Email, @Telefone)";
+                using (MySqlCommand cmd = new MySqlCommand(sql, connection)) {
+                    cmd.Parameters.AddWithValue("@Nome", Nome);
+                    cmd.Parameters.AddWithValue("@Cpf", Cpf);
+                    cmd.Parameters.AddWithValue("@Email", Email);
+                    cmd.Parameters.AddWithValue("@Telefone", Telefone);
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    Console.WriteLine($"{rowsAffected} registro inserido.");
+                    return true;
+                }
+            }
+        } catch (MySqlException ex) {
+            Console.WriteLine($"Erro ao criar cliente: {ex.Message}");
+            return false;
+        }
+    }
+
+    public static Cliente LerCliente(
+         string host
+        ,string usuario
+        ,string senha
+        ,string banco
+        ,string cpf
+    ) {
+        string connectionString = $"Server={host};Database={banco};Uid={usuario};Pwd={senha};";
+
+        try {
+            using (MySqlConnection connection = new MySqlConnection(connectionString)) {
+                connection.Open();
+                string sql = "SELECT nome, email, telefone FROM clientes WHERE cpf = @Cpf";
+                using (MySqlCommand cmd = new MySqlCommand(sql, connection)) {
+                    cmd.Parameters.AddWithValue("@Cpf", cpf);
+                    using (MySqlDataReader reader = cmd.ExecuteReader()) {
+                        if (reader.Read()) {
+                            string nome = reader.GetString("nome");
+                            string email = reader.GetString("email");
+                            string telefone = reader.GetString("telefone");
+                            Console.WriteLine(
+                                $"Nome: {nome}, Email: {email}, Telefone: {telefone}"
+                            );
+                            return new Cliente(nome, cpf, email, telefone);
+                        } else {
+                            Console.WriteLine("Cliente não encontrado.");
+                            return null;
+                        }
+                    }
+                }
+            }
+        } catch (MySqlException ex) {
+            Console.WriteLine($"Erro ao ler cliente: {ex.Message}");
+            return null;
+        }
+    }
+
+    public bool AtualizarCliente(string host, string usuario, string senha, string banco) {
+        string connectionString = $"Server={host};Database={banco};Uid={usuario};Pwd={senha};";
+
+        try {
+            using (MySqlConnection connection = new MySqlConnection(connectionString)) {
+                connection.Open();
+                string sql =
+                    "UPDATE clientes SET nome = @Nome, email = @Email, telefone = @Telefone WHERE cpf = @Cpf";
+                using (MySqlCommand cmd = new MySqlCommand(sql, connection)) {
+                    cmd.Parameters.AddWithValue("@Nome", Nome);
+                    cmd.Parameters.AddWithValue("@Email", Email);
+                    cmd.Parameters.AddWithValue("@Telefone", Telefone);
+                    cmd.Parameters.AddWithValue("@Cpf", Cpf);
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    Console.WriteLine($"{rowsAffected} registro(s) atualizado(s).");
+                    return true;
+                }
+            }
+        } catch (MySqlException ex) {
+            Console.WriteLine($"Erro ao atualizar cliente: {ex.Message}");
+            return false;
+        }
+    }
+
+    public static bool DeletarCliente(
+         string host
+        ,string usuario
+        ,string senha
+        ,string banco
+        ,string cpf
+    ) {
+        string connectionString = $"Server={host};Database={banco};Uid={usuario};Pwd={senha};";
+
+        try {
+            using (MySqlConnection connection = new MySqlConnection(connectionString)) {
+                connection.Open();
+                string sql = "DELETE FROM clientes WHERE cpf = @Cpf";
+                using (MySqlCommand cmd = new MySqlCommand(sql, connection)) {
+                    cmd.Parameters.AddWithValue("@Cpf", cpf);
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    Console.WriteLine($"{rowsAffected} registro(s) deletado(s).");
+                    return true;
+                }
+            }
+        } catch (MySqlException ex) {
+            Console.WriteLine($"Erro ao deletar cliente: {ex.Message}");
+            return false;
+        }
+    }
+
+    public static void Main(string[] args) {
+        // Configurações do banco de dados
+        string dbHost     = "localhost";     // Substitua pelo endereço do MySQL
+        string dbUser     = "seu_usuario";   // Substitua pelo seu usuário do MySQL
+        string dbPassword = "sua_senha";     // Substitua pela sua senha do MySQL
+        string dbName     = "seu_banco";     // Substitua pelo nome do seu banco de dados
+
+        // Criando um novo cliente
+        Cliente novoCliente = new Cliente(
+             "Maria Souza"
+            ,"987.654.321-00"
+            ,"maria.souza@email.com"
+            ,"(11) 88888-8888"
+        );
+        novoCliente.CriarCliente(dbHost, dbUser, dbPassword, dbName);
+
+        // Lendo um cliente existente
+        Cliente clienteExistente = Cliente.LerCliente(
+             dbHost
+            ,dbUser
+            ,dbPassword
+            ,dbName
+            ,"987.654.321-00"
+        );
+
+        if (clienteExistente != null) {
+            // Atualizando o cliente
+            clienteExistente.Nome = "Maria de Souza";
+            clienteExistente.AtualizarCliente(dbHost, dbUser, dbPassword, dbName);
+            Cliente.LerCliente(dbHost, dbUser, dbPassword, dbName, "987.654.321-00");
+
+            // Deletando o cliente
+            Cliente.DeletarCliente(dbHost, dbUser, dbPassword, dbName, "987.654.321-00");
+            Cliente.LerCliente(dbHost, dbUser, dbPassword, dbName, "987.654.321-00");
+        }
+    }
+}
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Imagemagick compare images diference <keywords>Linux; Windows; Image; Diference; Diff, Magick; Terminal; Console;</keywords></h3>
+<pre><code class="bash">
+"\Program Files (x86)\ImageMagick-7.0.7-Q16\magick.exe" compare -verbose -metric RMSE MOZ-07ZC.jpg MOZ-077C.jpg NULL:</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>MySQL kill slepping process <keywords>Linux; Windows; MySQL; Kill; Process; SQL; Terminal; Console;</keywords></h3>
+<pre><code class="sql">
+SELECT GROUP_CONCAT('kill ',id SEPARATOR '; ') AS kill_list FROM INFORMATION_SCHEMA.PROCESSLIST WHERE command='Sleep' and TIME>300;</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Ler uma tag de vários XMLs em python <keywords>Linux; Windows; Code; Python; XML; Tag; Files;</keywords></h3>
+<pre><code class="python">
+from lxml import etree
+import glob
+
+for f in glob.glob(r"C:\path\top\xml\files\*.xml"):
+    print f.split("\\")[-1]
+    x = open(f).read()
+    xp = etree.fromstring(x)
+    xo = xp.findall(".//")
+    for i in xo:
+        if i.tag.endswith("TAGNAME"):
+            print "    "+i.attrib["ATTRIBUTE"].split("\\")[1]
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>MySQL replication without downtime <keywords>Linux; Windows; MySQL; Replication; Backup; Downtime; Terminal; Console;</keywords></h3>
+<pre><code class="bash">
+== MASTER ==
+1. Editar
+/etc/my.cnf
+%PROGRAMDATA%\MySQL\MySQL Server 5.7\my.ini
+%PROGRAMDATA%\MySQL\MySQL Server 5.7\my.cnf
+
+Adicionar em [mysqld]
+
+server-id=1
+binlog-format=mixed
+log-bin=mysql-bin
+innodb_flush_log_at_trx_commit=1
+sync_binlog=1
+
+2. Reiniciar o serviço
+
+systemctl restart mysqld
+net stop wampmysqld; net start wampmysqld
+
+3. Criar um usuário de replicação
+
+CREATE USER 'repl'@'%' IDENTIFIED BY 'replpass';
+GRANT REPLICATION SLAVE ON *.* TO 'repl'@'%' IDENTIFIED BY 'replpass';
+FLUSH PRIVILEGES;
+
+4. Dump do banco com dados de binlog
+
+mysqldump --skip-lock-tables --single-transaction --flush-logs --master-data=2 -A > dump.sql
+
+5. Caso o arquivo seja muito grande, pode zipar ele
+
+gzip -9 ~/mysqldump.sql
+
+6. Tranferir para o outro servidor
+
+scp dump.sql.gz root@IP_DO_SECONDARY:~/
+
+
+== SECONDARY ==
+
+1. Extrair o zip, caso esteja zipado
+
+gunzip dump.sql.gz
+
+2. Importar no banco
+
+mysql -uroot -p < dump.sql
+
+3. Editar
+/etc/my.cnf
+%PROGRAMDATA%\MySQL\MySQL Server 5.7\my.ini
+%PROGRAMDATA%\MySQL\MySQL Server 5.7\my.cnf
+
+Adicionar em [mysqld]
+
+server-id = 2
+binlog-format = mixed
+log_bin = mysql-bin
+relay-log = mysql-relay-bin
+log-slave-updates = 1
+read-only = 1
+
+4. Reiniciar o serviço
+
+systemctl restart mysqld
+net stop wampmysqld; net start wampmysqld
+
+5. Buscar as informações de posição de log no momento do dump
+
+head dump.sql -n80 | grep "MASTER_LOG_POS"
+
+6. Ativar a replicação no SECONDARY
+
+STOP SLAVE;
+CHANGE MASTER TO MASTER_HOST='10.0.0.3'
+                , MASTER_USER='repl'
+                , MASTER_PASSWORD='replpass'
+                , MASTER_LOG_FILE='mysql-bin.000054'
+                , MASTER_LOG_POS=98;
+STOP SLAVE;
+
+7. Verificar status
+
+SHOW SLAVE STATUS \G
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>MySQL error mysql has gone away <keywords>Linux; Windows; MySQL; Error; Terminal; Console;</keywords></h3>
+<pre><code class="bash">
+vim /etc/mysql/mysql.conf.d/mysqld.cnf
+
+[mysqld]
+wait_timeout = 600
+max_allowed_packet = 64M
+
+service mysql restart    
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Setup linux replication automation mysql <keywords>Linux; Windows; MySQL; Replication; Backup; Terminal; Console;</keywords></h3>
+<pre><code class="bash">
+cp -vf sshd_config /etc/ssh/
+cp -vf mysqld.cnf /etc/mysql/mysql.conf.d/
+
+mysql -B --silent --raw -e "show master status;"
+BINFILE=`mysql -B --silent --raw -e "show master status;" | cut -f1`
+BINPOS=`mysql -B --silent --raw -e "show master status;" | cut -f2`
+
+cat setup02.sql | sed "s/BINFILE/$BINFILE/" | sed "s/BINPOS/$BINPOS/" > setup02.comp.sql
+
+sshpass -p myusername ssh root@192.168.25.82
+sshpass -p myusername ssh root@192.168.25.82 "ls -la"
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Erro mysql ERROR 1524 (HY000): Plugin 'auth_socket' is not loaded <keywords>Linux; Windows; MySQL; Error; Authentication; Password; Terminal; Console;</keywords></h3>
+<pre><code class="bash">
+1. first, run these bash commands
+
+sudo /etc/init.d/mysql stop
+sudo mysqld_safe --skip-grant-tables &
+mysql -uroot
+
+2. then run mysql commands => copy paste this to cli manually
+
+use mysql;
+update user set authentication_string=PASSWORD("") where User='root';
+update user set plugin="mysql_native_password" where User='root';
+flush privileges;
+quit;
+
+3. run more bash commands
+
+sudo /etc/init.d/mysql stop
+sudo /etc/init.d/mysql start # reset mysql
+# try login to database, just press enter at password prompt because your password is now blank
+mysql -u root -p
+
+4. Socket issue (from your comments)
+
+When you see a socket error, a community came with 2 possible solutions:
+
+sudo mkdir -p /var/run/mysqld; sudo chown mysql /var/run/mysqld
+sudo mysqld_safe --skip-grant-tables &
+
+Or
+
+mkdir -p /var/run/mysqld && chown mysql:mysql /var/run/mysqld
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Watchdog server pushover <keywords>Linux; Pushover; Push; Notification; Watchdog; Check; Terminal; Console;</keywords></h3>
+<pre><code class="bash">
+MSG=""
+
+# Check and restart MySQL
+mysql -e "show databases" || {
+    MSG="$MSG MySQL"
+    for i in 1 2 3 4 5 6; do
+        echo service mysqld stop
+    done
+    for i in 1 2 3 4 5 6; do
+        echo killall -9 mysqld
+    done
+    for i in 1 2 3 4 5 6; do
+        service mysqld start
+    done
+}
+
+
+# Check and restart Apache
+curl http://localhost || {
+    MSG="$MSG Apache"
+    for i in 1 2 3 4 5 6; do
+        echo service apache2 stop
+    done
+    for i in 1 2 3 4 5 6; do
+        service apache2 start
+    done
+}
+
+
+# Disk free in percentage
+[ $(df -h / | grep dev | awk '{print $5}' | sed 's/[^0-9]//g') -gt 30 ] || MSG="$MSG Disk almost full"
+
+
+# Ram use in percentage
+[ $(free | grep -i mem | awk '{print int(($3/($2+1))*100)}') -lt 70 ] || MSG="$MSG RAM almost full"
+
+
+# Swap use in percentage
+[ $(free | grep -i swap | awk '{print int(($3/($2+1))*100)}') -lt 80 ] || MSG="$MSG SWAP almost full"
+
+
+# Send push
+[ "$MSG" == "" ] || curl -s --form-string "token=seu_token" --form-string "user=seu_user" --form-string "message=Servidor MySQL 012456 offline" https://api.pushover.net/1/messages.json
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Redirecionar tráfego localhost em iptables <keywords>Linux; Firewall; Iptables; Redir; NAT; DNAT; Connections; Terminal; Console;</keywords></h3>
+<pre><code class="bash">
+sysctl -w net.ipv4.conf.all.route_localnet=1
+iptables -t nat -A OUTPUT -m addrtype --src-type LOCAL --dst-type LOCAL -p tcp --dport 3306 -j DNAT --to-destination 192.168.11.22:3306
+iptables -t nat -A POSTROUTING -m addrtype --src-type LOCAL --dst-type UNICAST -j MASQUERADE
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Apache: VirtualHost CGI <keywords>Linux; Windows; Apache; CGI; Terminal; Console;</keywords></h3>
+<pre><code class="">
+<&zwj;VirtualHost *:80>
+    ServerName www.foo.local
+    DocumentRoot /pasta/de/projetos/foo
+    ScriptAlias /cgi-bin /pasta/de/projetos/foo/cgi-bin/
+    <&zwj;Directory "/pasta/de/projetos/foo/cgi-bin">
+        AllowOverride None
+        Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch -Includes -Indexes
+        #AddHandler cgi-script .pl .py .bin .sh
+        SetHandler cgi-script 
+        Order allow,deny
+        Allow from all
+    <&zwj;/Directory>
+<&zwj;/VirtualHost>
+
+a2emod cgi
+service apache2 restart
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Python: CGI <keywords>Linux; Windows; Code; Python; CGI; Apache; Terminal; Console;</keywords></h3>
+<pre><code class="python">
+#!/usr/bin/env python3.7
+# vim: tabstop=4 shiftwidth=4 expandtab
+
+from wsgiref.handlers import CGIHandler
+from urllib.parse import parse_qs
+from html import escape
+import sys
+import traceback
+import time
+import uuid
+
+ 
+def error(environ, start_response):
+    s = traceback.format_exc()
+    return [s.encode()]
+    return ["Em manutenção".encode()]
+
+def app(environ, start_response):
+    headers = [
+        ('Content-Type', 'text/plain'),
+    ]
+    if not "HTTP_COOKIE" in environ:
+        i = (str(uuid.uuid1())+str(uuid.uuid4())).replace("-", "")
+        headers.append(('Set-Cookie', f'ocs={i}; Path=/'))
+    start_response('200 OK', headers)
+
+    #return ["ok".encode()]
+    ret = [("%s: %s\n" % (key, value)).encode("utf-8") for key, value in environ.items()]
+
+    d = parse_qs(environ['QUERY_STRING'])
+    retv = [("%s: %s\n" % (key, value)).encode("utf-8") for key, value in d.items()]
+   
+    #d = parse_qs(environ['wsgi.input'].read())
+    #retv = [("%s: %s\n" % (key, value)).encode("utf-8") for key, value in d.items()]
+
+    if 'PATH_INFO' in environ:
+       ret += [("V:%s\n" % (value)).encode("utf-8") for value in environ['PATH_INFO'][1:].split('/')]
+ 
+    return ret
+    return [environ["wsgi.input"].read()]
+    return [sys.stdin.read().encode("utf-8")]
+    
+    #age = d.get('age', [''])[0] # Returns the first age value.
+    #hobbies = d.get('hobbies', []) # Returns a list of hobbies.
+
+ch = CGIHandler()
+ch.error_output = error
+ch.run(app)
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Windows disable search start menu <keywords>Windows; Start; Menu; Search; Terminal; Console;</keywords></h3>
+<pre><code class="powershell">
+reg add HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search /f /v BingSearchEnabled /t REG_DWORD /d 0
+reg add HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search /f /v AllowSearchToUseLocation /t REG_DWORD /d 0
+reg add HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search /f /v CortanaConsent /t REG_DWORD /d 0
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Linux LXD LXC containers <keywords>Linux; LXD; LXC; Containers; Terminal; Console;</keywords></h3>
+<pre><code class="text">
+lxd init --auto
+
+lxc list
+
+lxc images list images: 
+
+lxc launch ubuntu:20.04 u1
+
+lxc start u1
+
+lxc info u1
+
+lxc exec u1 -- bash
+
+lxc config device add u1 myport80 proxy listen=tcp:0.0.0.0:80 connect=tcp:127.0.0.1:80
+
+lxc config device remove u1 myport80
+
+lxc config device add u1 datadir disk source=/data path=/data
+
+lxc config device remove u1 datadir 
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>MySQL query insert dinâmica <keywords>Linux; Windows; MySQL; Query; Insert; Dinâmico; Terminal; Console;</keywords></h3>
+<pre><code class="sql">
+DELIMITER $$
+CREATE DEFINER=`root`@`%` PROCEDURE `TESTEDIN`(
+    IN `JSIN` JSON
+)
+LANGUAGE SQL
+NOT DETERMINISTIC
+CONTAINS SQL
+SQL SECURITY DEFINER
+COMMENT ''
+BEGIN
+DECLARE RESF TEXT;
+DECLARE RESV TEXT;
+DECLARE NUM_ROWS INT;
+DECLARE I INT;
+DECLARE COL_NAME VARCHAR(50);
+DECLARE TEMPFIELD VARCHAR(50);
+DECLARE COL_NAMES CURSOR FOR
+    SELECT COLUMN_NAME
+    FROM INFORMATION_SCHEMA.COLUMNS
+    WHERE TABLE_NAME = 'ALUNOS'
+    ORDER BY ORDINAL_POSITION;
+OPEN COL_NAMES;
+SELECT FOUND_ROWS() INTO NUM_ROWS;
+SET I = 1;
+THE_LOOP: LOOP
+    IF I > NUM_ROWS THEN
+        CLOSE COL_NAMES;
+        LEAVE THE_LOOP;
+    END IF;
+    FETCH COL_NAMES 
+    INTO COL_NAME;     
+    SET TEMPFIELD = JSON_UNQUOTE(JSON_EXTRACT(JSIN, CONCAT('$.', COL_NAME)));
+    IF NOT ISNULL(TEMPFIELD) THEN 
+        SET RESF = CONCAT(COALESCE(RESF, ''), "'", COL_NAME, "',");
+        SET RESV = CONCAT(COALESCE(RESV, ''), "'", TEMPFIELD, "',");
+    END IF;
+    SET I = I + 1;  
+END LOOP THE_LOOP;
+SET RESF = LEFT(RESF, CHAR_LENGTH(RESF) - 1);
+SET RESV = LEFT(RESV, CHAR_LENGTH(RESV) - 1);
+SELECT CONCAT('INSERT INTO TABELA (', RESF, ') VALUES (', RESV, ');') Q;
+END$$
+DELIMITER ;
+
+CALL TESTEDIN('{"NOME":"GUSTAVO", "OUTRO":"123", "ID":"12", "DB":"PROF01", "TURMA":"BD1", "NADA":"NADA"}');  
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h2>Arquitetura de computadores</h2>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Portas lógicas</h3>
+<div class="center">
+    <img src="images/portasLogicas.svg">
+</div>
+
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Tabelas lógicas - Operações bitwise</h3>
+<pre><code class="">
+AND (&amp;)          OR &nbsp;(|)          XOR &nbsp;(^)         NOT &nbsp;(~)        Shift LEFT &nbsp; (&lt;&lt;)
+0 &amp; 0 = 0        0 | 0 = 0        0 ^ 0 = 0        0 ~ = 1         010110 &lt;&lt; 1 = 101100
+0 &amp; 1 = 0        0 | 1 = 1        0 ^ 1 = 1        0 ~ = 1         010110 &lt;&lt; 2 = 011000
+1 &amp; 0 = 0        1 | 0 = 1        1 ^ 0 = 1        1 ~ = 0
+1 &amp; 1 = 1        1 | 1 = 1        1 ^ 1 = 0        1 ~ = 0
+                                                                   Shift RIGHT&nbsp; (&gt;&gt;)
+1100 &amp;           1100 |           1100 ^           1100 ~=         010110 &gt;&gt; 1 = 001011
+1010             1010             1010             0011            010110 &gt;&gt; 2 = 000101
+----             ----             ----
+1000             1110             0110
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Tabela conversão de base</h3>
+<pre><code class="text">
+    Dec Oct Hex Binary      Dec Oct Hex Binary      Dec Oct Hex Binary
+--- --- --- ---------   --- --- --- ---------   --- --- --- ---------
+000 000 000 0000.0000   043 053 02B 0010.1011   086 126 056 0101.0110
+001 001 001 0000.0001   044 054 02C 0010.1100   087 127 057 0101.0111
+002 002 002 0000.0010   045 055 02D 0010.1101   088 130 058 0101.1000
+003 003 003 0000.0011   046 056 02E 0010.1110   089 131 059 0101.1001
+004 004 004 0000.0100   047 057 02F 0010.1111   090 132 05A 0101.1010
+005 005 005 0000.0101   048 060 030 0011.0000   091 133 05B 0101.1011
+006 006 006 0000.0110   049 061 031 0011.0001   092 134 05C 0101.1100
+007 007 007 0000.0111   050 062 032 0011.0010   093 135 05D 0101.1101
+008 010 008 0000.1000   051 063 033 0011.0011   094 136 05E 0101.1110
+009 011 009 0000.1001   052 064 034 0011.0100   095 137 05F 0101.1111
+010 012 00A 0000.1010   053 065 035 0011.0101   096 140 060 0110.0000
+011 013 00B 0000.1011   054 066 036 0011.0110   097 141 061 0110.0001
+012 014 00C 0000.1100   055 067 037 0011.0111   098 142 062 0110.0010
+013 015 00D 0000.1101   056 070 038 0011.1000   099 143 063 0110.0011
+014 016 00E 0000.1110   057 071 039 0011.1001   100 144 064 0110.0100
+015 017 00F 0000.1111   058 072 03A 0011.1010   101 145 065 0110.0101
+016 020 010 0001.0000   059 073 03B 0011.1011   102 146 066 0110.0110
+017 021 011 0001.0001   060 074 03C 0011.1100   103 147 067 0110.0111
+018 022 012 0001.0010   061 075 03D 0011.1101   104 150 068 0110.1000
+019 023 013 0001.0011   062 076 03E 0011.1110   105 151 069 0110.1001
+020 024 014 0001.0100   063 077 03F 0011.1111   106 152 06A 0110.1010
+021 025 015 0001.0101   064 100 040 0100.0000   107 153 06B 0110.1011
+022 026 016 0001.0110   065 101 041 0100.0001   108 154 06C 0110.1100
+023 027 017 0001.0111   066 102 042 0100.0010   109 155 06D 0110.1101
+024 030 018 0001.1000   067 103 043 0100.0011   110 156 06E 0110.1110
+025 031 019 0001.1001   068 104 044 0100.0100   111 157 06F 0110.1111
+026 032 01A 0001.1010   069 105 045 0100.0101   112 160 070 0111.0000
+027 033 01B 0001.1011   070 106 046 0100.0110   113 161 071 0111.0001
+028 034 01C 0001.1100   071 107 047 0100.0111   114 162 072 0111.0010
+029 035 01D 0001.1101   072 110 048 0100.1000   115 163 073 0111.0011
+030 036 01E 0001.1110   073 111 049 0100.1001   116 164 074 0111.0100
+031 037 01F 0001.1111   074 112 04A 0100.1010   117 165 075 0111.0101
+032 040 020 0010.0000   075 113 04B 0100.1011   118 166 076 0111.0110
+033 041 021 0010.0001   076 114 04C 0100.1100   119 167 077 0111.0111
+034 042 022 0010.0010   077 115 04D 0100.1101   120 170 078 0111.1000
+035 043 023 0010.0011   078 116 04E 0100.1110   121 171 079 0111.1001
+036 044 024 0010.0100   079 117 04F 0100.1111   122 172 07A 0111.1010
+037 045 025 0010.0101   080 120 050 0101.0000   123 173 07B 0111.1011
+038 046 026 0010.0110   081 121 051 0101.0001   124 174 07C 0111.1100
+039 047 027 0010.0111   082 122 052 0101.0010   125 175 07D 0111.1101
+040 050 028 0010.1000   083 123 053 0101.0011   126 176 07E 0111.1110
+041 051 029 0010.1001   084 124 054 0101.0100   127 177 07F 0111.1111
+042 052 02A 0010.1010   085 125 055 0101.0101   128 178 080 1000.0000
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Tabela ASCII</h3>
+<pre><code class="text">
+nul   0 0000 0x00 | sp  32 0040 0x20 |  @  64 0100 0x40 |  `     96 0140 0x60
+soh   1 0001 0x01 |  !  33 0041 0x21 |  A  65 0101 0x41 |  a     97 0141 0x61
+stx   2 0002 0x02 |  "  34 0042 0x22 |  B  66 0102 0x42 |  b     98 0142 0x62
+etx   3 0003 0x03 |  #  35 0043 0x23 |  C  67 0103 0x43 |  c     99 0143 0x63
+eot   4 0004 0x04 |  $  36 0044 0x24 |  D  68 0104 0x44 |  d    100 0144 0x64
+enq   5 0005 0x05 |  %  37 0045 0x25 |  E  69 0105 0x45 |  e    101 0145 0x65
+ack   6 0006 0x06 |  &  38 0046 0x26 |  F  70 0106 0x46 |  f    102 0146 0x66
+bel   7 0007 0x07 |  '  39 0047 0x27 |  G  71 0107 0x47 |  g    103 0147 0x67
+ bs   8 0010 0x08 |  (  40 0050 0x28 |  H  72 0110 0x48 |  h    104 0150 0x68
+ ht   9 0011 0x09 |  )  41 0051 0x29 |  I  73 0111 0x49 |  i    105 0151 0x69
+ nl  10 0012 0x0a |  *  42 0052 0x2a |  J  74 0112 0x4a |  j    106 0152 0x6a
+ vt  11 0013 0x0b |  +  43 0053 0x2b |  K  75 0113 0x4b |  k    107 0153 0x6b
+ np  12 0014 0x0c |  ,  44 0054 0x2c |  L  76 0114 0x4c |  l    108 0154 0x6c
+ cr  13 0015 0x0d |  -  45 0055 0x2d |  M  77 0115 0x4d |  m    109 0155 0x6d
+ so  14 0016 0x0e |  .  46 0056 0x2e |  N  78 0116 0x4e |  n    110 0156 0x6e
+ si  15 0017 0x0f |  /  47 0057 0x2f |  O  79 0117 0x4f |  o    111 0157 0x6f
+dle  16 0020 0x10 |  0  48 0060 0x30 |  P  80 0120 0x50 |  p    112 0160 0x70
+dc1  17 0021 0x11 |  1  49 0061 0x31 |  Q  81 0121 0x51 |  q    113 0161 0x71
+dc2  18 0022 0x12 |  2  50 0062 0x32 |  R  82 0122 0x52 |  r    114 0162 0x72
+dc3  19 0023 0x13 |  3  51 0063 0x33 |  S  83 0123 0x53 |  s    115 0163 0x73
+dc4  20 0024 0x14 |  4  52 0064 0x34 |  T  84 0124 0x54 |  t    116 0164 0x74
+nak  21 0025 0x15 |  5  53 0065 0x35 |  U  85 0125 0x55 |  u    117 0165 0x75
+syn  22 0026 0x16 |  6  54 0066 0x36 |  V  86 0126 0x56 |  v    118 0166 0x76
+etb  23 0027 0x17 |  7  55 0067 0x37 |  W  87 0127 0x57 |  w    119 0167 0x77
+can  24 0030 0x18 |  8  56 0070 0x38 |  X  88 0130 0x58 |  x    120 0170 0x78
+ em  25 0031 0x19 |  9  57 0071 0x39 |  Y  89 0131 0x59 |  y    121 0171 0x79
+sub  26 0032 0x1a |  :  58 0072 0x3a |  Z  90 0132 0x5a |  z    122 0172 0x7a
+esc  27 0033 0x1b |  ;  59 0073 0x3b |  [  91 0133 0x5b |  {    123 0173 0x7b
+ fs  28 0034 0x1c |  <  60 0074 0x3c |  \  92 0134 0x5c |  |    124 0174 0x7c
+ gs  29 0035 0x1d |  =  61 0075 0x3d |  ]  93 0135 0x5d |  }    125 0175 0x7d
+ rs  30 0036 0x1e |  >  62 0076 0x3e |  ^  94 0136 0x5e |  ~    126 0176 0x7e
+ us  31 0037 0x1f |  ?  63 0077 0x3f |  _  95 0137 0x5f |  del  127 0177 0x7f
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h2>Programação em linguagem C</h2>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Boilerplate</h3>
+<pre><code class="language-c">
+#include &lt;stdio.h&gt;
+int main() {
+    printf("Hello\n");
+    return 0;
+}
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Ponteiros</h3>
+<pre><code class="language-c">
+#include <&zwj;stdio.h>
+
+int main(void) {
+    int age = 37;
+    printf("\n%p", &age);
+    printf("\n%u", age);
+
+    printf("\nIdade:");  
+    scanf("%u", &age);
+
+    int *address = &age;
+    printf("\n%u", *address);
+
+    *address = 38;
+    printf("\n%u", *address);
+
+    int prices[3] = { 5, 4, 3 };
+    printf("\n%u", *prices);
+    printf("\n%u", *(prices + 1));
+
+    printf("\n");
+    return 0;
+}
+</code></pre>
+
+
+<h3>Ponteiros</h3>
+<pre><code class="language-c">
+#include <&zwj;stdio.h>
+#include <&zwj;stdlib.h>
+
+typedef struct {
+    int Idade;
+    float Peso;
+    float Altura;
+} Paciente;
+
+void PrintPaciente(Paciente *P) {
+    printf("Idade: %d  Peso: %f Altura: %f\n", P->Idade, P->Peso, P->Altura);
+}
+
+void SetPaciente(Paciente *P, int idade, float peso, float altura) { 
+    printf("Endereco ref: %p\n", &P);
+    P->Idade = idade; 
+    P->Peso = peso;
+    P->Altura = altura;
+}
+
+Paciente SetPacienteVal(Paciente P, int idade, float peso, float altura) { 
+    printf("Endereco val: %p\n", &P);
+    P.Idade = idade; 
+    P.Peso = peso;
+    P.Altura = altura;
+    return P;
+}
+    
+int main() {
+    Paciente *Pedro = malloc(sizeof(Paciente));
+    SetPaciente(Pedro, 15, 70.5, 1.75);
+    PrintPaciente(Pedro);
+    SetPaciente(Pedro, 18, 80.0, 1.85);
+    SetPaciente(Pedro, 18, 80.0, 1.85);
+    SetPaciente(Pedro, 18, 80.0, 1.85);
+    PrintPaciente(Pedro);
+    Paciente PedroCopia = SetPacienteVal(*Pedro, 28, 80.0, 1.85);
+    PrintPaciente(&PedroCopia);
+
+    free(Pedro);  
+    Pedro = NULL; //evita dangling pointer
+    return 0;
+}
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>int printf(const char * format, ...);</h3>
+<pre><code class="plain">
+    %[flags][width][.precision][length]specifier
+
+    Specifiers
+    d or i   Signed decimal integer                                   392
+    u        Unsigned decimal integer                                7235
+    o        Unsigned octal                                           610
+    x        Unsigned hexadecimal integer                             7fa
+    X        Unsigned hexadecimal integer (uc)                        7FA
+    f        Decimal floating point (lc)                           392.65
+    F        Decimal floating point (uc)                           392.65
+    e        Scientific notation (mantissa/exponent), (lc)      3.9265e+2
+    E        Scientific notation (mantissa/exponent), (uc)      3.9265E+2
+    g        Use the shortest representation: %e or %f             392.65
+    G        Use the shortest representation: %E or %F             392.65
+    a        Hexadecimal floating point (lc)                 -0xc.90fep-2
+    A        Hexadecimal floating point (uc)                 -0XC.90FEP-2
+    p        Pointer address                                     b8000000
+    c        Character                                                  a
+    s        String of characters                                    test
+    %%       % character                                                %
+    n        Nothing printed
+
+    flags
+    -        Left-justify within the given field width; Right is default (see width sub-specifier)
+    +        Forces to preceed the result with a plus or minus sign (+ or -) even for positive numbers
+    (space)  If no sign is going to be written, a blank space is inserted before the value.
+    #        Used with o, x or X specifiers the value is preceeded with 0, 0x or 0X respectively for values different than zero.
+             Used with a, A, e, E, f, F, g or G it forces the written output to contain a decimal point even if no more digits follow.
+             By default, if no digits follow, no decimal point is written.
+    0        Left-pads the number with zeroes (0) instead of spaces when padding is specified (see width sub-specifier).
+
+    width
+    (number) Minimum number of characters to be printed.
+             If the value to be printed is shorter than this number, the result is padded with blank spaces.
+             The value is not truncated even if the result is larger.
+    *        The width is not specified in the format string, but as an additional integer value argument preceding the argument that has to be formatted.
+
+    precision
+    .number   For integer specifiers (d, i, o, u, x, X): precision specifies the minimum number of digits to be written.
+              If the value to be written is shorter than this number, the result is padded with leading zeros.
+              The value is not truncated even if the result is longer.
+              A precision of 0 means that no character is written for the value 0.
+              For a, A, e, E, f and F specifiers: this is the number of digits to be printed after the decimal point (by default, this is 6).
+              For g and G specifiers: This is the maximum number of significant digits to be printed.
+              For s: this is the maximum number of characters to be printed. By default all characters are printed until the ending null character is encountered.
+              If the period is specified without an explicit value for precision, 0 is assumed.
+    .*        The precision is not specified in the format string, but as an additional integer value argument preceding the argument that has to be formatted.
+
+    length
+    length    d i           u o x X                 f F e E g G a A     c       s       p           n
+    (none)    int           unsigned int            double              int     char*   void*       int*
+    hh        signed char   unsigned char                                                           signed char*
+    h         short int     unsigned short int                                                      short int*
+    l         long int      unsigned long int                                   wint_t  wchar_t*    long int*
+    ll        long long int unsigned long long int                                                  long long int*
+    j         intmax_t      uintmax_t                                                               intmax_t*
+    z         size_t        size_t                                                                  size_t*
+    t         ptrdiff_t     ptrdiff_t                                                               ptrdiff_t*
+    L                                               long double
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Operações lógicas bitwise</h3>
+<pre>
+<code class="language-c">
+#include &lt;stdio.h&gt;
+
+int main() {
+    unsigned int a = 60;     // 60 = 0011 1100 em binário
+    unsigned int b = 13;     // 13 = 0000 1101 em binário
+    unsigned int resultado;
+
+    // Operação AND (&)
+    resultado = a & b;       // resultado = 12 (0000 1100)
+    printf("a & b = %u\n", resultado);
+
+    // Operação OR (|)
+    resultado = a | b;       // resultado = 61 (0011 1101)
+    printf("a | b = %u\n", resultado);
+
+    // Operação XOR (^)
+    resultado = a ^ b;       // resultado = 49 (0011 0001)
+    printf("a ^ b = %u\n", resultado);
+
+    // Operação Shift Right (>>)
+    resultado = a >> 2;      // resultado = 15 (0000 1111)
+    printf("a >> 2 = %u\n", resultado);
+
+    // Operação Shift Left (<<)
+    resultado = a << 2;      // resultado = 240 (1111 0000)
+    printf("a << 2 = %u\n", resultado);
+
+    return 0;
+}
+</code>
+</pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h3>Operações com arquivos</h3>
+<pre><code class="language-c">
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+int main(void) {
+    FILE *filePointer;
+    char *text = "Some string";
+    filePointer = fopen("example.txt", "w");
+    if(filePointer == NULL) {
+        printf("fopen failed\n");
+        return 1;
+    }
+    fprintf(filePointer, "%s", text);
+    fclose(pont_arq);
+    return 0;
+}
+</code></pre>
+<pre><code class="text">
+"rb", "wb", "ab", "rb+", "r+b", "wb+", "w+b", "ab+", "a+b"
+
+r    read
+w    write - create if not exists
+a    append - create if not exists
+r+   read and write - create if not exists - truncate if file exists
+a+   append - create if not exists - read from beginning - write to the end
+b    binary
+</code></pre>
+
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+
+
+<h2>Impressão</h2>
+<h3>Page sizes</h3>
+<pre><code class="bash">
+           mm            inches               mm            inches              mm            inches      
+     +------------- A --------------+  +-------------- B --------------+  +------------- C --------------+
+  0  |  841 x 1189  |  33.1 x 46.8  |  |  1000 x 1414  |  39.4 x 55.7  |  |  917 x 1297  |  36.1 x 51.1  |
+  1  |  594 x  841  |  23.4 x 33.1  |  |   707 x 1000  |  27.8 x 39.4  |  |  648 x  917  |  25.5 x 36.1  |
+  2  |  420 x  594  |  16.5 x 23.4  |  |   500 x  707  |  19.7 x 27.8  |  |  458 x  648  |  18.0 x 25.5  |
+  3  |  297 x  420  |  11.7 x 16.5  |  |   353 x  500  |  13.9 x 19.7  |  |  324 x  458  |  12.8 x 18.0  |
+  4  |  210 x  297  |   8.3 x 11.7  |  |   250 x  353  |   9.8 x 13.9  |  |  229 x  324  |   9.0 x 12.8  |
+  5  |  148 x  210  |   5.8 x  8.3  |  |   176 x  250  |   6.9 x  9.8  |  |  162 x  229  |   6.4 x  9.0  |
+  6  |  105 x  148  |   4.1 x  5.8  |  |   125 x  176  |   4.9 x  6.9  |  |  114 x  162  |   4.5 x  6.4  |
+  7  |   74 x  105  |   2.9 x  4.1  |  |    88 x  125  |   3.5 x  4.9  |  |   81 x  114  |   3.2 x  4.5  |
+  8  |   52 x   74  |   2.0 x  2.9  |  |    62 x   88  |   2.4 x  3.5  |  |   57 x   81  |   2.2 x  3.2  |
+  9  |   37 x   52  |   1.5 x  2.0  |  |    44 x   62  |   1.7 x  2.4  |  |   40 x   57  |   1.6 x  2.2  |
+ 10  |   26 x   37  |   1.0 x  1.5  |  |    31 x   44  |   1.2 x  1.7  |  |   28 x   40  |   1.1 x  1.6  |
+     +--------------+---------------+  +---------------+---------------+  +--------------+---------------+
+</code></pre>
+
+<div class="center">
+    <img style="height:300px" src="images/pageSizesA.png">
+    <img style="height:300px" src="images/pageSizesB.png">
+    <img style="height:300px" src="images/pageSizesC.png">
+</div>
+<br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br>
+</html>
+
